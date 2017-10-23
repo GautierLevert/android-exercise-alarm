@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Alarme</string>
+    <string-array name="mode_array">
+        <item>Vibration</item>
+        <item>Toast</item>
+        <item>Musique</item>
+    </string-array>
+</resources>
