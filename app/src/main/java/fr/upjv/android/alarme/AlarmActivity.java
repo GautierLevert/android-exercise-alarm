@@ -27,6 +27,8 @@ public class AlarmActivity extends Activity {
 
     public static final String EXTRA_DELAY = "fr.upjv.android.alarme.EXTRA_DELAY";
 
+    private static final String INSTANCE_DELAY = "fr.upjv.android.alarme.INSTANCE_DELAY";
+
     public static final String EXTRA_MODE = "fr.upjv.android.alarme.EXTRA_MODE";
 
     private TextView textView;
@@ -41,17 +43,11 @@ public class AlarmActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-        long millisDelay;
-
-        millisDelay = getIntent().getLongExtra(EXTRA_DELAY, -1L);
-
-        if (millisDelay < 0L) {
-            finish();
-            return;
+        if (savedInstanceState != null) {
+            delay = (Duration) savedInstanceState.getSerializable(INSTANCE_DELAY);
+        } else {
+            delay = (Duration) getIntent().getSerializableExtra(EXTRA_DELAY);
         }
-
-        delay = new Duration(millisDelay);
 
         setContentView(R.layout.activity_alarm);
 
@@ -63,6 +59,7 @@ public class AlarmActivity extends Activity {
         countDownTask.setListener(new CountDownTask.CountDownListener() {
             @Override
             public void onCountDownUpdate(Period periodUntilFinish) {
+                delay = periodUntilFinish.toStandardDuration();
                 displayRemainingTime(periodUntilFinish);
             }
 
@@ -87,6 +84,12 @@ public class AlarmActivity extends Activity {
         if (mediaPlayer != null) {
             mediaPlayer.release();
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable(INSTANCE_DELAY, delay);
     }
 
     private void displayRemainingTime(Period periodUntilFinish) {

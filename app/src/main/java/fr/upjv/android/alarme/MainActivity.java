@@ -10,7 +10,6 @@ import android.widget.Spinner;
 
 import org.joda.time.Duration;
 
-
 public class MainActivity extends Activity {
 
     private NumberPicker minutesPicker;
@@ -42,7 +41,7 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, AlarmActivity.class)
-                        .putExtra(AlarmActivity.EXTRA_DELAY, parseMinutes().plus(parseSeconds()).getMillis())
+                        .putExtra(AlarmActivity.EXTRA_DELAY, parseMinutes().plus(parseSeconds()))
                         .putExtra(AlarmActivity.EXTRA_MODE, (String) spinner.getSelectedItem()));
             }
         });

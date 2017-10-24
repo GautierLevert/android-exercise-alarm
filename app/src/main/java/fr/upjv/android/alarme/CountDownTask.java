@@ -40,13 +40,14 @@ public class CountDownTask extends AsyncTask<Duration, Period, Void> {
     }
 
     @Override
-    //le execute dans le thread principale
+    //executé dans le thread principale
     protected void onPreExecute() {
         super.onPreExecute();
         start = Instant.now();
     }
 
     @Override
+    //executé dans le thread principale
     protected void onProgressUpdate(Period... values) {
         super.onProgressUpdate(values);
         if (listener != null) {
@@ -55,7 +56,7 @@ public class CountDownTask extends AsyncTask<Duration, Period, Void> {
     }
 
     @Override
-    //l'execute dans le thread principale
+    //executé dans le thread principale
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
         if (listener != null) {
